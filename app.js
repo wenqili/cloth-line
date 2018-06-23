@@ -45,7 +45,7 @@ let init = () => {
     Instascan.Camera.getCameras().then(function (cameras) {
         console.log("CAMERAS: ",cameras)
         if (cameras.length > 0) {
-            scanner.start(cameras[cameras.length]);
+            scanner.start(cameras[cameras.length-1]);
         } else {
             console.error('No cameras found.');
         }
