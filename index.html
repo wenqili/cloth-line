@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/webmidi"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="./webmidi.js"></script>
+
     <script src="./instascan.min.js"></script>
     <script src="./app.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <h1 id="test">MIDI</h1>
-    <video id="preview"></video>
-    <video id="scanArea"></video>
-    <button id="cloth-1">Yes</button>
-</body>
+    <h1>Webcam scan QR code then send Midi trigger to Madmapper</h1>
+    <h2>Generate QR code here: <a href="https://www.the-qrcode-generator.com/">https://www.the-qrcode-generator.com/</a></h2>
+    <div id="btn-container">
+    </div>
+   
+    <div>
+        <video id="preview"></video>
+    </div>
+
+    <div>
+        <h1>Status</h1>
+        <ul id="status"></ul>
+    </div>
+    </body>
+
 </html>

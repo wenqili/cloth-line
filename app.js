@@ -1,58 +1,109 @@
-// console.log("app.js")
+let btnArr = ["F3", "B3", "C3", "D3", "E3"]
 let output;
+let index = 0;
 
 WebMidi.enable(function (err) {
 
     if (err) {
-      console.log("WebMidi could not be enabled.", err);
+        console.log("WebMidi could not be enabled.", err);
     } else {
-    //   console.log("WebMidi enabled!");
+        console.log("WebMidi enabled!");
     }
-    
-  });
+
+});
 
 WebMidi.enable(function (err) {
-    // console.log(WebMidi.inputs);
-    // console.log(WebMidi.outputs);
+   
+    console.log("INPUTS: ",WebMidi.inputs);
+    console.log("OUTPUS: ",WebMidi.outputs);
     output = WebMidi.getOutputByName("MadMapper In");
-    // console.log(output)
+    console.log("Choose MadMapper as Output!")
+
 });
 
 
 
 let scanner;
-let counter = 0;
-let init = () =>{
-    console.log("init")
-    let cloth1 = document.getElementById("cloth-1");
-    let test = document.getElementById("test");
-    // console.log("button",cloth1)
-    cloth1.addEventListener("click",function(){
-        console.log("1")
-        output.playNote("F3");
-    })
+let init = () => {
+    buttonBinding()
 
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview'),refractoryPeriod: 5000, });
+    scanner = new Instascan.Scanner({
+        video: document.getElementById('preview'),
+        refractoryPeriod: 5000,
+    });
+
     scanner.addListener('scan', function (content) {
-        console.log(content);
-        if(content == "64"){
-            output.playNote("F3");
-            counter++;
-            test.innerHTML = "works "+counter+" times";
-        }
-      });
-      Instascan.Camera.getCameras().then(function (cameras) {
+        console.log("Scan Found: ",content);
+        printOnScreen("Scan found: " + content)
+        btnArr.forEach((e) => {
+            if (content == e) {
+                sendNoteOn(e)
+            }
+        })
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+        console.log("CAMERAS: ",cameras)
         if (cameras.length > 0) {
-          scanner.start(cameras[0]);
+            scanner.start(cameras[0]);
         } else {
-          console.error('No cameras found.');
+            console.error('No cameras found.');
         }
-      }).catch(function (e) {
+    }).catch(function (e) {
         console.error(e);
-      });
+    });
 
 }
 
 document.addEventListener('DOMContentLoaded', init, false);
 
 
+let buttonBinding = () => {
+    let btnParent = document.getElementById("btn-container")
+    for (var i = 0; i < btnArr.length; i++) {
+        let btn = document.createElement("button")
+        let btnText = document.createTextNode(btnArr[i])
+        btn.appendChild(btnText)
+        btn.className = "btn"
+        btn.id = btnArr[i]
+        btnParent.appendChild(btn)
+
+        let index = i
+        btn.addEventListener("click", function () {
+            sendNoteOn(btnArr[index])
+        })
+
+    }
+}
+
+let sendNoteOn = (note) => {
+    console.log("Send NoteOn", note)
+    resetNote()
+    output.playNote(note)
+    printOnScreen("send NoteOn: " + note)
+}
+
+let resetNote = () => {
+    btnArr.forEach((e) => {
+        output.stopNote(e)
+    })
+}
+
+let printOnScreen = (str) => {
+    index++
+    let textList = document.createElement("li")
+    textList.innerHTML = index + " ~ " + str
+    let textParent = document.getElementById("status")
+    textParent.prepend(textList)
+    if (index > 10) {
+        removeItem()
+    }
+
+}
+
+let removeItem = () => {
+    let list = document.getElementById("status").getElementsByTagName('li')
+    console.log(list)
+    let last = list[list.length - 1]
+    last.parentNode.removeChild(last)
+}
