@@ -44,9 +44,38 @@ let init = () => {
 
     Instascan.Camera.getCameras().then(function (cameras) {
         console.log("CAMERAS: ",cameras)
+        let cameraList = document.createElement("select");
+
         cameras.forEach((e)=>{
             printOnScreen("found camera: "+e.name)
+            let option = document.createElement("option")
+            option.text = e.name
+            cameraList.add(option)
         })
+
+        //for dropdrow twst
+        let option = document.createElement("option")
+            option.text = "No Cam"
+            cameraList.add(option)
+
+        let cameraDom = document.getElementById("cameraList")
+        cameraDom.appendChild(cameraList)
+
+        cameraList.addEventListener("change",function(){
+            let cam = cameraList.value
+            printOnScreen("You selecet: "+cam)
+            cameras.forEach((e)=>{
+                if(e.name == cam){
+                    scanner.start(e)
+                    
+                }
+            })
+            if(cam =="No Cam"){
+                scanner.stop()
+            }
+            
+        })
+
         if (cameras.length > 0) {
             scanner.start(cameras[cameras.length-1]);
         } else {
