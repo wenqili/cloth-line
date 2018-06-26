@@ -1,8 +1,35 @@
 button{
-    margin:15px 10px;
+    margin:10px 5px;
+    width:100px;
 }
 
 
 body {
     font-family: sans-serif;
 }
+
+.dropdown{
+    margin:10px 5px;
+}
+
+.right {
+    width:48vw;
+    float: right;
+    top: 0;
+}
+
+.left {
+    width:48vw;
+    float: left;
+}
+
+.play {
+    color:green;
+    font-weight:bold;
+}
+
+.stop {
+    color:red;
+    font-weight:bold;
+}
+

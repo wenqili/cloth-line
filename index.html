@@ -14,21 +14,28 @@
 </head>
 
 <body>
-    <h1>Webcam scan QR code then send Midi trigger to Madmapper</h1>
-    <h2>Generate QR code here: <a href="https://www.the-qrcode-generator.com/">https://www.the-qrcode-generator.com/</a></h2>
-    <h2>In madMapper, the Note should be map to "octave 2"</h2>
-    <div id="btn-container">
-    </div>
-   
-    <div>
-        <div id="cameraList" style="margin:10px"></div>
-        <video id="preview"></video>
-    </div>
+    <div class="left">
+        <h2>Webcam scan QR code then send Midi trigger to Local MIDI outputs</h2>
+        <h3>Authur: Wenqi Li @ ITP</h3>
+        <p>Generate QR code here:
+            <a href="https://www.the-qrcode-generator.com/">https://www.the-qrcode-generator.com/</a>
+        </p>
+        <p>In madMapper/controls/Edit MIDI controls, use "Learn" then press button on page to assign Note to video </p>
+        
+        <div id="outputList" class="dropdown">MIDI output: </div>
+        <div id="cameraList" class="dropdown">Camera List: </div>
+        <div id="btn-container">
+        </div>
 
-    <div>
-        <h1>Status</h1>
+        <div>
+
+            <video id="preview"></video>
+        </div>
+    </div>
+    <div class="right">
+        <h2>Status</h2>
         <ul id="status"></ul>
     </div>
-    </body>
+</body>
 
 </html>
